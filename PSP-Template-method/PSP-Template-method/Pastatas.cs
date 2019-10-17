@@ -13,10 +13,13 @@ namespace PSP_Template_method
         public string regionas;
         public string tipas;
 
-        protected abstract double Gyvybes();
-        public double PastatoGyvybes()
+        public double Gyvybes()
         {
-            return Gyvybes();
+            double apskGyvybes = veikejoGyvybes();
+            apskGyvybes = papildomosGyvybes();
+            return apskGyvybes;
         }
+        protected abstract double veikejoGyvybes();
+        protected abstract double papildomosGyvybes();
     }
 }

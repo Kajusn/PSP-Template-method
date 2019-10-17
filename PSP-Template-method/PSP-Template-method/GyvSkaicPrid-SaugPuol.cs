@@ -93,17 +93,24 @@ namespace PSP_Template_method
             }
             this.gyvas = true;
         }
-        protected override double GyvybiuSkaiciavimas()
+        protected override double zalosKeitimas()
         {
-            double apskGyv;
-            apskGyv = this.GyvybiuTipas.veikejoGyvybes(this.gyvybes, this.sarvai, this.lygis);
-            apskGyv = this.GyvybiuTipas.papildomosGyvybes(this.klase, apskGyv, this.kilme);
-            return apskGyv;
+            return this.PuolimoTipas.zalosKeitimas(this.lygis, this.klase);
         }
 
-        protected override void AtnaujintiZala()
+        protected override double veikejoGyvybes()
         {
-            this.maxZala = this.PuolimoTipas.zalosKeitimas(this.lygis, this.klase);
+            return this.GyvybiuTipas.veikejoGyvybes(this.gyvybes, this.sarvai, this.lygis);
+        }
+
+        protected override double papildomosGyvybes()
+        {
+            return this.GyvybiuTipas.papildomosGyvybes(this.klase, this.gyvybes, this.kilme);
+        }
+
+        protected override double puolimoApsauga()
+        {
+            return this.PuolimoTipas.puolimoApsauga(this.sarvai, this.klase);
         }
     }
 }

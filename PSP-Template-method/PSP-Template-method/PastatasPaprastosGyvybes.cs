@@ -15,12 +15,17 @@ namespace PSP_Template_method
             this.regionas = regionas;
             this.tipas = tipas;
             this.gsp = new GyvybiuSkaiciavimasPaprastas();
-            this.gyvybes = PastatoGyvybes();
+            this.gyvybes = Gyvybes();
         }
-        protected override double Gyvybes()
+
+        protected override double papildomosGyvybes()
+        {
+            return gsp.papildomosGyvybes(tipas, aukstis, regionas);
+        }
+
+        protected override double veikejoGyvybes()
         {
             return gsp.veikejoGyvybes(100, apsaugos, aukstis);
         }
-
     }
 }
