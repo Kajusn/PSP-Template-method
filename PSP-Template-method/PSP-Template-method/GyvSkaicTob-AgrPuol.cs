@@ -11,16 +11,15 @@ namespace PSP_Template_method
 
         protected override double GyvybiuSkaiciavimas()
         {
-            return this.GyvybiuTipas.veikejoGyvybes(this.gyvybes, this.sarvai, this.lygis);
+            double apskGyv;
+            apskGyv = this.GyvybiuTipas.veikejoGyvybes(this.gyvybes, this.sarvai, this.lygis);
+            apskGyv = this.GyvybiuTipas.papildomosGyvybes(this.klase, apskGyv, this.kilme);
+            return apskGyv;
         }
 
-        protected override void KeistiLygi(int naujasLygis)
+        protected override void AtnaujintiZala()
         {
-            this.lygis = naujasLygis;
-            this.gyvybes = this.lygis * 100;
-            this.gyvybes = GyvybiuSkaiciavimas();
-            if (this.PuolimoTipas != null)
-                this.maxZala = this.PuolimoTipas.zalosKeitimas(this.lygis, this.klase);
+            this.maxZala = this.PuolimoTipas.zalosKeitimas(this.lygis, this.klase);
         }
     }
 }

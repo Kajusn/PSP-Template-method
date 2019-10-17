@@ -18,8 +18,20 @@ namespace PSP_Template_method
         public string klase;
         public string strategija;
 
-        protected abstract void KeistiLygi(int naujasLygis);
+        public double Gyvybes()
+        {
+            return GyvybiuSkaiciavimas();
+        }
+        protected void KeistiLygi(int naujasLygis)
+        {
+            this.lygis = naujasLygis;
+            this.gyvybes = this.lygis * 100;
+            this.gyvybes = Gyvybes();
+            AtnaujintiZala();
+        }
         protected abstract double GyvybiuSkaiciavimas();
+
+        protected abstract void AtnaujintiZala();
         public bool Pulti(Veikejas taikinys)
         {
             if (!taikinys.gyvas) return false;
