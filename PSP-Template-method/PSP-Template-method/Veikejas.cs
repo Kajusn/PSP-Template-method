@@ -6,9 +6,9 @@ namespace PSP_Template_method
 {
     public abstract class Veikejas
     {
-        private enum Klase { Karvedys = 1, Kovotojas, Magas, Alchemikas };
-        private enum Kilme { Troja = 1, Maneja, Trofis };
-        private enum PuolimoTipai { Agresyvus = 1, Saugus };
+        protected enum Klase { Karvedys = 1, Kovotojas, Magas, Alchemikas };
+        protected enum Kilme { Troja = 1, Maneja, Trofis };
+        protected enum PuolimoTipai { Agresyvus = 1, Saugus };
         public double sarvai { get; set; }
         public int lygis;
         public bool gyvas;
@@ -18,9 +18,8 @@ namespace PSP_Template_method
         public string klase;
         public string strategija;
 
-        public abstract void KeistiLygi(int naujasLygis);
-        public abstract double GyvybiuSkaiciavimas();
-        public abstract void PasirinktiPuolimoTipa(int tipas);
+        protected abstract void KeistiLygi(int naujasLygis);
+        protected abstract double GyvybiuSkaiciavimas();
         public bool Pulti(Veikejas taikinys)
         {
             if (!taikinys.gyvas) return false;
