@@ -22,7 +22,7 @@ namespace PSP_Template_method
         {
             return GyvybiuSkaiciavimas();
         }
-        protected void KeistiLygi(int naujasLygis)
+        public void KeistiLygi(int naujasLygis)
         {
             this.lygis = naujasLygis;
             this.gyvybes = this.lygis * 100;
@@ -30,7 +30,6 @@ namespace PSP_Template_method
             AtnaujintiZala();
         }
         protected abstract double GyvybiuSkaiciavimas();
-
         protected abstract void AtnaujintiZala();
         public bool Pulti(Veikejas taikinys)
         {

@@ -20,12 +20,10 @@ namespace PSP_Template_method
             string komanda;
             string lygioKelimas = @"^lygis$";
             string puolimas = @"^pulti$";
-            string puolimoPasirinkimas = @"^puolimo tipas$";
             string lygioSablonas = @"^(100|[1-9][0-9]|[1-9])$";
             string puolimoTipoSablonas = @"^[1-2]$";
             Regex rgxLygioKelimas = new Regex(lygioKelimas);
             Regex rgxPuolimas = new Regex(puolimas);
-            Regex rgxPuolimoPasirinkimas = new Regex(puolimoPasirinkimas);
             Random rnd = new Random();
             List<Veikejas> priesai = new List<Veikejas>();
             List<Pastatas> pastatai = new List<Pastatas>();
@@ -33,13 +31,12 @@ namespace PSP_Template_method
             int sudetingumas = ZaidimoPradzia();
             for (int i = 0; i < sudetingumas * 3; i++)
             {
-                priesai.Add(new Veikejas(rnd.Next(1, 3), rnd.Next(1, 4), rnd.Next(1, 10), rnd.Next(50, 200), rnd.Next(10, 70)));
-                priesai[i].PasirinktiPuolimoTipa(rnd.Next(1, 2));
+                priesai.Add(new GyvSkaicPapr_AgrPuol(rnd.Next(1, 3), rnd.Next(1, 4), rnd.Next(1, 10), rnd.Next(50, 200), rnd.Next(10, 70)));
             }
 
             for (int i = 0; i < 5; i++)
             {
-                pastatai.Add(new Pastatas(rnd.Next(1, 10), rnd.Next(1, 5000), zaidejas.kilme, miestoPastatai[rnd.Next(1, 6)]));
+                pastatai.Add(new PastatasPaprastosGyvybes(rnd.Next(1, 10), rnd.Next(1, 5000), zaidejas.kilme, miestoPastatai[rnd.Next(1, 6)]));
             }
 
             while (zaidejas.gyvas)
@@ -47,7 +44,7 @@ namespace PSP_Template_method
                 RodytiAplinka(priesai, pastatai);
 
                 Console.WriteLine("\nHEROJUS " + zaidejas.strategija + " " + zaidejas.klase + " (" + zaidejas.lygis + ")" + " HP: " + zaidejas.gyvybes + " AR: " + zaidejas.sarvai + " DMG: " + zaidejas.maxZala + " " +
-                                  "\nGalimos komandos: \"pulti\", \"lygis\", \"puolimo tipas\"\n");
+                                  "\nGalimos komandos: \"pulti\", \"lygis\"\n");
 
                 komanda = Console.ReadLine();
                 if (rgxLygioKelimas.IsMatch(komanda))
@@ -59,19 +56,9 @@ namespace PSP_Template_method
                 }
                 else if (rgxPuolimas.IsMatch(komanda))
                 {
-                    if (zaidejas.PuolimoTipas != null)
-                    {
-                        Console.WriteLine("Pasirinkite prieso numeri: \n");
-                        int priesoNumeris = Convert.ToInt32(SkaitytiIvesti(priesuPasirinkimas[sudetingumas]));
-                        zaidejas.Pulti(priesai[priesoNumeris - 1]);
-                    }
-                    else Console.WriteLine("Zaidejas neturi puolimo strategijos!\n");
-                }
-                else if (rgxPuolimoPasirinkimas.IsMatch(komanda))
-                {
-                    Console.WriteLine("\n1. Agresyvus puolimas\n2. Saugus puolimas");
-                    int pasirinkimas = Convert.ToInt32(SkaitytiIvesti(puolimoTipoSablonas));
-                    zaidejas.PasirinktiPuolimoTipa(pasirinkimas);
+                    Console.WriteLine("Pasirinkite prieso numeri: \n");
+                    int priesoNumeris = Convert.ToInt32(SkaitytiIvesti(priesuPasirinkimas[sudetingumas]));
+                    zaidejas.Pulti(priesai[priesoNumeris - 1]);
                 }
                 else
                     Console.WriteLine("Neatpazinta komanda!\n");
@@ -124,18 +111,18 @@ namespace PSP_Template_method
             param[1] = Convert.ToInt32(SkaitytiIvesti(pattern));
             Console.Clear();
 
-            zaidejas = new Veikejas(param[1], param[0]);
-
             Console.WriteLine("Pasirinkite gyvybiu tipa:\n" +
                               "1. Nuo lygio, sarvu ir klases\n" +
                               "2. Nuo lygio, kilmes ir klases\n" +
                               "3. Paprastas tik nuo lygio\n");
             val = SkaitytiIvesti(pattern);
             if (Convert.ToInt32(val) == 1)
-                zaidejas.GyvybiuTipas = new GyvybiuSkaiciavimasPridetinis();
+                zaidejas = new GyvSkaicPrid_AgrPuol(param[1], param[0]);
 
             else if (Convert.ToInt32(val) == 2)
-                zaidejas.GyvybiuTipas = new GyvybiuSkaiciavimasTobulinamas();
+                zaidejas = new GyvSkaicTob_AgrPuol(param[1], param[0]);
+            else
+                zaidejas = new GyvSkaicPapr_AgrPuol(param[1], param[0]);
 
             Console.Clear();
             Console.WriteLine("Personazas sukurtas!\nTesti...[ENTER]");
