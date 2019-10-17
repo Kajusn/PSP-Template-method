@@ -14,9 +14,9 @@ namespace PSP_Template_method
         public string tipas;
 
         protected abstract double Gyvybes();
-        public void PastatoGyvybes()
+        public double PastatoGyvybes()
         {
-            this.gyvybes = Gyvybes();
+            return Gyvybes();
         }
     }
 }
